@@ -197,6 +197,18 @@ public class MenuController : MonoBehaviour
         return true;
     }
 
+    public bool AllSkillsFilled()
+    {
+        if (remainingSkillPoints == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void UpdatePlayer(string stat, TMP_Text label)
     {
         int valueInt = 0;
@@ -214,6 +226,13 @@ public class MenuController : MonoBehaviour
         if(menuIndex == 3)
         {
             if(AllStatsFilled())
+            {
+                canContinue = true;
+            }
+        }
+        else if(menuIndex == 4)
+        {
+            if(AllSkillsFilled())
             {
                 canContinue = true;
             }
@@ -263,14 +282,17 @@ public class MenuController : MonoBehaviour
                 statValue.ResetValues();
             }
 
-            foreach(SkillValue skillValue in skillValues)
+            updateDropDowns = true;
+            SetDropDownOptions();
+        }
+        else if(menuIndex == 4)
+        {
+            foreach (SkillValue skillValue in skillValues)
             {
                 skillValue.ResetValues();
             }
             remainingSkillPoints = 12;
-
-            updateDropDowns = true;
-            SetDropDownOptions();
+            remainingPointsText.text = remainingSkillPoints.ToString();
         }
 
         menuScreens[menuIndex].SetActive(true);
